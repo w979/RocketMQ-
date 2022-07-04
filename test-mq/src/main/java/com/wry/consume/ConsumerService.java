@@ -20,16 +20,17 @@ public class ConsumerService {
 
     public void consumerMessage() throws Exception{
         // 实例化消费者
-        final DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("wry-producer1");
+        final DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("wry-producers");
         // nameServer 地址
         consumer.setNamesrvAddr("47.99.48.23:9876");
         // 订阅一个或者多个Topic，以及Tag来过滤需要消费的消息
-        consumer.subscribe("borker-a", "*");
+        consumer.subscribe("borker-w", "*");
         // 注册回调实现类来处理从broker拉取回来的消息
         consumer.registerMessageListener(new MessageListenerConcurrently() {
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
                 System.out.printf("%s 接收到的消息: %s %n", Thread.currentThread().getName(), msgs);
+                System.out.println("msgs:"+msgs);
                 // 标记该消息已经被成功消费
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
