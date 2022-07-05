@@ -3,6 +3,7 @@ package com.wry.controller;
 import com.wry.consume.ConsumerService;
 import com.wry.producer.AsyncProducer;
 import com.wry.producer.OnewayProducer;
+import com.wry.producer.SortProducer;
 import com.wry.producer.SyncProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
@@ -35,6 +36,8 @@ public class MQController {
     private ConsumerService consumerService;
     @Resource
     private OnewayProducer onewayProducer;
+    @Resource
+    private SortProducer sortProducer;
 
 
     /**
@@ -43,11 +46,13 @@ public class MQController {
     @GetMapping("send")
     public String producers() throws Exception {
         //异步消息
-        asyncProducer.asyncSend();
+        //asyncProducer.asyncSend();
         //同步消息
         // syncProducer.syncSend();
         //单向消息
-        onewayProducer.onewaySend();
+        //onewayProducer.onewaySend();
+        //顺序消息
+        sortProducer.sortProducer();
         return "ok";
     }
 

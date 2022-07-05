@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * <h1>  <h1>
+ * <h1> 订单实体 <h1>
  *
  * @author 魏如元
  * @since 2022/7/1
@@ -18,12 +18,12 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Order implements Serializable {
-
-    private Long id;
-
-    private String productName;
-
-    private BigDecimal amount;
-
-    private Date createTime;
+    /**
+     * 订单编号
+     */
+    private Long orderId;
+    /**
+     * 操作
+     */
+    private String desc;
 }
