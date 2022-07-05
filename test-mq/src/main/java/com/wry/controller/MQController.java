@@ -2,6 +2,7 @@ package com.wry.controller;
 
 import com.wry.consume.ConsumerService;
 import com.wry.producer.AsyncProducer;
+import com.wry.producer.OnewayProducer;
 import com.wry.producer.SyncProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
@@ -24,7 +25,7 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("mq")
 @Slf4j
-public class PayController {
+public class MQController {
 
     @Resource
     private AsyncProducer asyncProducer;
@@ -32,15 +33,21 @@ public class PayController {
     private SyncProducer syncProducer;
     @Resource
     private ConsumerService consumerService;
+    @Resource
+    private OnewayProducer onewayProducer;
 
 
     /**
      * 发送同步消息
      */
-    @GetMapping("syncSend")
+    @GetMapping("send")
     public String producers() throws Exception {
+        //异步消息
         asyncProducer.asyncSend();
-       // syncProducer.syncSend();
+        //同步消息
+        // syncProducer.syncSend();
+        //单向消息
+        onewayProducer.onewaySend();
         return "ok";
     }
 

@@ -18,17 +18,14 @@ public class OnewayProducer {
 
     public void onewaySend() throws Exception{
         // 实例化消息生产者Producer
-        DefaultMQProducer producer = new DefaultMQProducer("please_rename_unique_group_name");
+        DefaultMQProducer producer = new DefaultMQProducer("OnewayProducer_Group");
         // 设置NameServer的地址
-        producer.setNamesrvAddr("localhost:9876");
+        producer.setNamesrvAddr("47.99.48.23:9876");
         // 启动Producer实例
         producer.start();
         for (int i = 0; i < 100; i++) {
             // 创建消息，并指定Topic，Tag和消息体
-            Message msg = new Message("TopicTest" /* Topic */,
-                    "TagA" /* Tag */,
-                    ("Hello RocketMQ " + i).getBytes(RemotingHelper.DEFAULT_CHARSET) /* Message body */
-            );
+            Message msg = new Message("broker-a","log",("日志-"+i).getBytes(RemotingHelper.DEFAULT_CHARSET));
             // 发送单向消息，没有任何返回结果
             producer.sendOneway(msg);
 
