@@ -39,8 +39,8 @@ public class PayController {
      */
     @GetMapping("syncSend")
     public String producers() throws Exception {
-       // asyncProducer.asyncSend();
-        syncProducer.syncSend();
+        asyncProducer.asyncSend();
+       // syncProducer.syncSend();
         return "ok";
     }
 
