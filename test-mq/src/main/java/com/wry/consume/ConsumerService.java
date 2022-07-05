@@ -7,6 +7,7 @@ import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,17 +21,19 @@ public class ConsumerService {
 
     public void consumerMessage() throws Exception{
         // 实例化消费者
-        final DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("wry-producers");
+        final DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("wry-producer2");
         // nameServer 地址
         consumer.setNamesrvAddr("47.99.48.23:9876");
         // 订阅一个或者多个Topic，以及Tag来过滤需要消费的消息
-        consumer.subscribe("borker-w", "*");
+        consumer.subscribe("broker-a", "*");
         // 注册回调实现类来处理从broker拉取回来的消息
         consumer.registerMessageListener(new MessageListenerConcurrently() {
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
-                System.out.printf("%s 接收到的消息: %s %n", Thread.currentThread().getName(), msgs);
-                System.out.println("msgs:"+msgs);
+              //  System.out.printf("%s 接收到的消息: %s %n", Thread.currentThread().getName(), msgs);
+                for (MessageExt msg : msgs) {
+                    System.out.println(""+new String(msg.getBody()));
+                }
                 // 标记该消息已经被成功消费
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
